@@ -8,10 +8,11 @@ body, html {
 	height: 100vh;
 	width: 100vw;
 	overflow: auto;
+	position: relative;
 
 	#car {
 		margin-top: 20px;
-		position: relative;
+		position: absolute;
 		height: 110px;
 		width: 150px;
 
@@ -34,6 +35,7 @@ body, html {
 			.glass {
 				position: absolute;
 				top: 10px;
+				left: 20px;
 				background: Dodgerblue;
 				height: 20px;
 				width: 30px;
