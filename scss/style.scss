@@ -1,0 +1,68 @@
+body, html {
+	margin: 0;
+	padding: 0;
+}
+
+#page {
+	background: grey;
+	height: 100vh;
+	width: 100vw;
+	overflow: auto;
+
+	#car {
+		margin-top: 20px;
+		position: relative;
+		height: 110px;
+		width: 150px;
+
+		.carBody {
+			position: absolute;
+			height: 50px;
+			width: 150px;
+			background: blue;
+			top: 40px;
+		}
+
+		.cab {
+			position: absolute;
+			height: 40px;
+			width: 50px;
+			background: blue;
+			top: 0px;
+			left: 50px;
+
+			.glass {
+				position: absolute;
+				top: 10px;
+				background: Dodgerblue;
+				height: 20px;
+				width: 30px;
+			}
+		}
+
+		.wheel {
+			position: absolute;
+			background: black;
+			border-radius: 20px;
+			height: 40px;
+			width: 40px;
+			top: 70px;
+			left: 20px;
+
+			&.secondWheel {
+				left: 90px;
+			}
+
+			.hub {
+				position: absolute;
+				background: grey;
+				border-radius: 10px;
+				height: 20px;
+				width: 20px;
+				top: 10px;
+				left: 10px;
+			}
+
+		}
+	}
+}

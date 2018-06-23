@@ -28,16 +28,19 @@ function updatePosition() {
         x = viewportWidth;
 
     var style = {left:x};
-    $("#container").css(style);
+    $("#car").css(style);
 }
 
 window.addEventListener("keydown", function(event){
     switch(event.key) {
         case "ArrowRight":
             moveRight();
+            event.preventDefault();
             break;
+
         case "ArrowLeft":
             moveLeft();
+            event.preventDefault();
             break;
     };
 }, true);
