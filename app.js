@@ -5,8 +5,16 @@ var arrowLeftPressed = false;
 var arrowUpPressed = false;
 var arrowDownPressed = false;
 var speedIncrement = 5;
+
 setViewport();
 updatePosition();
+drawBarGap(50, 300, 150);
+drawBarGap(50, 300, 100);
+drawBarGap(50, 300, 50);
+drawBarGap(50, 300, 25);
+drawBarGap(50, 300, 0);
+drawBarGap(50, 300, -50);
+
 setInterval (function(){
   if (arrowRightPressed)
     x = x + speedIncrement;
@@ -18,6 +26,29 @@ setInterval (function(){
     y = y + speedIncrement;
   updatePosition();
 }, 10);
+
+function drawBarGap(width, aperture, offsetY) {
+
+  var fullBar = document.createElement("div");
+  var upperBar = document.createElement("div");
+  var lowerBar = document.createElement("div");
+
+  upperBar.className = "upperBar";
+  upperBar.style.width = width + "px";
+  upperBar.style.height = ((viewportHeight - aperture + offsetY) / 2) + "px";
+
+  lowerBar.className = "lowerBar";
+  lowerBar.style.width = width + "px";
+  lowerBar.style.height = ((viewportHeight - aperture - offsetY) / 2) + "px";
+  lowerBar.style.top = aperture + "px";
+
+  fullBar.className = "fullBar";
+  fullBar.style.width = width + "px";
+  fullBar.appendChild(upperBar);
+  fullBar.appendChild(lowerBar);
+
+  document.getElementById("roadContainer").appendChild(fullBar);
+}
 
 function setViewport() {
   viewportWidth = document.documentElement.clientWidth;

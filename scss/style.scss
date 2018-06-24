@@ -64,7 +64,23 @@ body, html {
 				top: 10px;
 				left: 10px;
 			}
+		}
+	}
 
+	#roadContainer { 
+		width: 100vw;
+		height: 100vh;
+
+		.fullBar {
+			float: right;
+
+			.upperBar {
+				background: sandybrown;
+			}
+			.lowerBar {
+				position: relative;
+				background: sandybrown;
+			}
 		}
 	}
 }

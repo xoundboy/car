@@ -51,3 +51,13 @@ body, html {
         width: 20px;
         top: 10px;
         left: 10px; }
+  #page #roadContainer {
+    width: 100vw;
+    height: 100vh; }
+    #page #roadContainer .fullBar {
+      float: right; }
+      #page #roadContainer .fullBar .upperBar {
+        background: sandybrown; }
+      #page #roadContainer .fullBar .lowerBar {
+        position: relative;
+        background: sandybrown; }
