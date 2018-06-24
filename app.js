@@ -9,12 +9,13 @@ var arrowDownPressed = false;
 var speedIncrement = 5;
 var currentSection;
 var sectionOffset = 0;
-var barWidth = 50;
-var barAperture = 300;
+var barWidth = 10;
+var barAperture = 250;
 var started = false;
 var carInterval;
 var roadInterval;
-
+var roadMotionTickMs = 10;
+var roadCycles = 0;
 
 setViewport();
 x = 50;
@@ -27,7 +28,7 @@ startGame();
 
 function startGame() {
 	carInterval = setInterval(carMotion,10);
-	roadInterval = setInterval(roadMotion, 1000);
+	roadInterval = setInterval(roadMotion, roadMotionTickMs);
 	started = true;
 }
 
@@ -38,7 +39,7 @@ function pauseGame() {
 }
 
 function firstBitOfRoad() {
-	var barsInViewport = Math.ceil(viewportWidth / barWidth) - 5;
+	var barsInViewport = Math.ceil(viewportWidth / barWidth);
 	for (var i = 0; i < barsInViewport; i++)
 		drawBarGaps(0);
 }
@@ -50,6 +51,9 @@ function roadMotion() {
 	currentSection.remaining = currentSection.remaining - 1;
 	drawBarGaps(sectionOffset);
 	document.getElementsByClassName("fullBar")[0].remove();
+	roadCycles++;
+	if (roadCycles % 50 === 0)
+		barAperture--;
 }
 
 function carMotion() {
@@ -68,9 +72,10 @@ function getRandomNumberInRange(min, max) {
 	return Math.floor((Math.random() * (max - min)) + min);
 }
 
-function loadNextSection() {
-	var remaining = getRandomNumberInRange(3,8);
-	var gradient = getRandomNumberInRange(3,8) / remaining;
+function loadNextSection(forceGradient) {
+	var resolutionFactor = 20 / barWidth;
+	var remaining = getRandomNumberInRange(2 * resolutionFactor ,10 * resolutionFactor);
+	var gradient = forceGradient ? forceGradient : getRandomNumberInRange(-4,4) / remaining;
 	currentSection = {gradient: gradient, remaining: remaining};
 }
 
@@ -80,13 +85,22 @@ function drawBarGaps(offset) {
   var upperBar = document.createElement("div");
   var lowerBar = document.createElement("div");
 
+  var upperBarHeight = ((viewportHeight - barAperture) / 2) - offset;
+  var lowerBarHeight = ((viewportHeight - barAperture) / 2) + offset;
+
+  if (upperBarHeight <=  0)
+  	loadNextSection(-.5);
+
+  if (lowerBarHeight <= 0)
+  	loadNextSection(.5);
+
   upperBar.className = "upperBar";
   upperBar.style.width = barWidth + "px";
-  upperBar.style.height = ((viewportHeight - barAperture + offset) / 2) + "px";
+  upperBar.style.height = upperBarHeight + "px";
 
   lowerBar.className = "lowerBar";
   lowerBar.style.width = barWidth + "px";
-  lowerBar.style.height = ((viewportHeight - barAperture - offset) / 2) + "px";
+  lowerBar.style.height = lowerBarHeight + "px";
   lowerBar.style.top = barAperture + "px";
 
   fullBar.className = "fullBar";
@@ -114,7 +128,6 @@ function updateCarPosition() {
 }
 
 window.addEventListener("keydown", function(event){
-	console.log(event.key);
 	switch(event.key) {
 		case "ArrowRight": arrowRightPressed = true; break;
 		case "ArrowLeft": arrowLeftPressed = true; break;

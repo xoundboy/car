@@ -70,9 +70,11 @@ body, html {
 	#roadContainer { 
 		width: 100vw;
 		height: 100vh;
+		overflow: hidden;
 
 		.fullBar {
 			float: left;
+			height: 100%;
 
 			.upperBar {
 				background: sandybrown;
