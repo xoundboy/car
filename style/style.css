@@ -55,9 +55,11 @@ body, html {
     width: 100vw;
     height: 100vh; }
     #page #roadContainer .fullBar {
-      float: right; }
+      float: left; }
       #page #roadContainer .fullBar .upperBar {
         background: sandybrown; }
       #page #roadContainer .fullBar .lowerBar {
         position: relative;
         background: sandybrown; }
+
+/*# sourceMappingURL=style.css.map */
