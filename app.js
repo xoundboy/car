@@ -16,6 +16,9 @@ var carInterval;
 var roadInterval;
 var roadMotionTickMs = 10;
 var roadCycles = 0;
+var roadOffsets = [];
+var gameEnded = false;
+var barsBeforeDecrement = 50;
 
 setViewport();
 x = 50;
@@ -27,6 +30,8 @@ updateCarPosition();
 startGame();
 
 function startGame() {
+	if (gameEnded)
+		return;
 	carInterval = setInterval(carMotion,10);
 	roadInterval = setInterval(roadMotion, roadMotionTickMs);
 	started = true;
@@ -38,10 +43,16 @@ function pauseGame() {
 	started = false;
 }
 
+function gameOver() {
+	console.log("gameover");
+	gameEnded = true;
+	pauseGame();
+}
+
 function firstBitOfRoad() {
 	var barsInViewport = Math.ceil(viewportWidth / barWidth);
 	for (var i = 0; i < barsInViewport; i++)
-		drawBarGaps(0);
+		newRoadSection(0);
 }
 
 function roadMotion() {
@@ -49,11 +60,59 @@ function roadMotion() {
 		loadNextSection();
 	sectionOffset = sectionOffset + (currentSection.gradient * barWidth);
 	currentSection.remaining = currentSection.remaining - 1;
-	drawBarGaps(sectionOffset);
-	document.getElementsByClassName("fullBar")[0].remove();
+	newRoadSection(sectionOffset);
+	removeOldRoadSection();
 	roadCycles++;
-	if (roadCycles % 50 === 0)
+	if (roadCycles % barsBeforeDecrement === 0)
 		barAperture--;
+	if (!checkWheelsStillOnRoad())
+		gameOver();
+}
+
+function getUpperBarHeight(offset) {
+	return ((viewportHeight - barAperture) / 2) - offset;
+}
+
+function getLowerBarHeight(offset) {
+	return ((viewportHeight - barAperture) / 2) + offset;
+}
+
+function checkWheel(x, y){
+	var offsetIndexOfRoadBar = Math.round(x / barWidth);
+	var offsetForBar = roadOffsets[offsetIndexOfRoadBar];
+	var bottomEdgeOfUpperBar = getUpperBarHeight(offsetForBar);
+	var topEdgeOfLowerBar = viewportHeight - getLowerBarHeight(offsetForBar);
+	return !(y < bottomEdgeOfUpperBar || y > topEdgeOfLowerBar)
+}
+
+function checkWheelsStillOnRoad() {
+	var points = getWheelOnRoadCoords();
+	if (!checkWheel(points.rearWheelOffset[0], points.rearWheelOffset[1]))
+		return false;
+	return checkWheel(points.frontWheelOffset[0], points.frontWheelOffset[1]);
+}
+
+function getWheelOnRoadCoords() {
+	var car = document.getElementById("car");
+	return {
+		rearWheelOffset:[car.offsetLeft + 40, car.offsetTop + 110],
+		frontWheelOffset:[car.offsetLeft + 110, car.offsetTop + 110]
+	};
+}
+
+function GetAllElementsAt(x, y) {
+	var $elements = $("body *").map(function() {
+		var $this = $(this);
+		var offset = $this.offset();
+		var l = offset.left;
+		var t = offset.top;
+		var h = $this.height();
+		var w = $this.width();
+		var maxx = l + w;
+		var maxy = t + h;
+		return (y <= maxy && y >= t) && (x <= maxx && x >= l) ? $this : null;
+	});
+	return $elements;
 }
 
 function carMotion() {
@@ -79,36 +138,45 @@ function loadNextSection(forceGradient) {
 	currentSection = {gradient: gradient, remaining: remaining};
 }
 
-function drawBarGaps(offset) {
+function newRoadSection(offset) {
+	roadOffsets.push(offset);
+	drawRoadSection(offset);
+}
 
-  var fullBar = document.createElement("div");
-  var upperBar = document.createElement("div");
-  var lowerBar = document.createElement("div");
+function removeOldRoadSection() {
+	roadOffsets.shift();
+	document.getElementsByClassName("fullBar")[0].remove();
+}
 
-  var upperBarHeight = ((viewportHeight - barAperture) / 2) - offset;
-  var lowerBarHeight = ((viewportHeight - barAperture) / 2) + offset;
+function drawRoadSection(offset) {
+	var fullBar = document.createElement("div");
+	var upperBar = document.createElement("div");
+	var lowerBar = document.createElement("div");
 
-  if (upperBarHeight <=  0)
-  	loadNextSection(-.5);
+	var upperBarHeight = getUpperBarHeight(offset);
+	var lowerBarHeight = getLowerBarHeight(offset);
 
-  if (lowerBarHeight <= 0)
-  	loadNextSection(.5);
+	if (upperBarHeight <=  0)
+		loadNextSection(-.5);
 
-  upperBar.className = "upperBar";
-  upperBar.style.width = barWidth + "px";
-  upperBar.style.height = upperBarHeight + "px";
+	if (lowerBarHeight <= 0)
+		loadNextSection(.5);
 
-  lowerBar.className = "lowerBar";
-  lowerBar.style.width = barWidth + "px";
-  lowerBar.style.height = lowerBarHeight + "px";
-  lowerBar.style.top = barAperture + "px";
+	upperBar.className = "upperBar";
+	upperBar.style.width = barWidth + "px";
+	upperBar.style.height = upperBarHeight + "px";
 
-  fullBar.className = "fullBar";
-  fullBar.style.width = barWidth + "px";
-  fullBar.appendChild(upperBar);
-  fullBar.appendChild(lowerBar);
+	lowerBar.className = "lowerBar";
+	lowerBar.style.width = barWidth + "px";
+	lowerBar.style.height = lowerBarHeight + "px";
+	lowerBar.style.top = barAperture + "px";
 
-  document.getElementById("roadContainer").appendChild(fullBar);
+	fullBar.className = "fullBar";
+	fullBar.style.width = barWidth + "px";
+	fullBar.appendChild(upperBar);
+	fullBar.appendChild(lowerBar);
+
+	document.getElementById("roadContainer").appendChild(fullBar);
 }
 
 function setViewport(){
@@ -139,7 +207,6 @@ window.addEventListener("keydown", function(event){
 			else
 				startGame();
 	}
-	event.preventDefault();
 }, true);
 
 window.addEventListener("keyup", function(event){
@@ -149,7 +216,6 @@ window.addEventListener("keyup", function(event){
 		case "ArrowUp": arrowUpPressed = false; break;
 		case "ArrowDown": arrowDownPressed = false; break;
 	}
-	event.preventDefault();
 }, true);
 
 window.addEventListener("resize", function(){
