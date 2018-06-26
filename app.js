@@ -46,14 +46,22 @@ function pauseGame() {
 }
 
 function gameOver() {
-	console.log("gameover");
 	gameEnded = true;
 	pauseGame();
+	var score = (barsTravelled * barWidth);
+	var highScore = window.localStorage.getItem("hiScore");
+	console.log(highScore);
+	if (score > parseInt(highScore)) {
+		window.localStorage.setItem("hiScore", score);
+		highScore = score;
+	}
+
 	var overlayLayer = document.getElementById("overlayLayer");
 	var pixelsTravelled = document.getElementById("pixelsTravelled");
-	pixelsTravelled.innerText = (barsTravelled * barWidth) + "";
+	var hiScoreValue = document.getElementById("hiScoreValue");
+	pixelsTravelled.innerText =  score + "";
 	overlayLayer.style.display = "flex";
-
+	hiScoreValue.innerText = highScore;
 }
 
 function firstBitOfRoad() {

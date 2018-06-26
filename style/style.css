@@ -78,15 +78,19 @@ body, html {
   #overlayLayer #banner {
     text-align: center; }
     #overlayLayer #banner #gameOver {
-      font-family: "Lucida Grande";
-      font-size: 48px;
+      font-family: "Arial Black";
+      font-size: 64px;
       font-weight: bold;
-      color: crimson; }
+      color: #ff0400; }
     #overlayLayer #banner #timeReadOut {
       font-family: "Arial Black";
-      font-size: 24px;
+      font-size: 36px;
       color: #26cc16; }
     #overlayLayer #banner #pixelsTravelled {
       color: lime; }
+    #overlayLayer #banner #hiScore {
+      font-family: "Arial Black";
+      font-size: 16px;
+      color: #3c130a; }
 
 /*# sourceMappingURL=style.css.map */
