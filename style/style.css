@@ -1,6 +1,7 @@
 body, html {
   margin: 0;
-  padding: 0; }
+  padding: 0;
+  position: relative; }
 
 #page {
   background: grey;
@@ -63,5 +64,29 @@ body, html {
       #page #roadContainer .fullBar .lowerBar {
         position: relative;
         background: sandybrown; }
+
+#overlayLayer {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: none; }
+  #overlayLayer #banner {
+    text-align: center; }
+    #overlayLayer #banner #gameOver {
+      font-family: "Lucida Grande";
+      font-size: 48px;
+      font-weight: bold;
+      color: crimson; }
+    #overlayLayer #banner #timeReadOut {
+      font-family: "Arial Black";
+      font-size: 24px;
+      color: #26cc16; }
+    #overlayLayer #banner #pixelsTravelled {
+      color: lime; }
 
 /*# sourceMappingURL=style.css.map */

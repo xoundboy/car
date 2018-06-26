@@ -1,6 +1,7 @@
 body, html {
 	margin: 0;
 	padding: 0;
+	position: relative;
 }
 
 #page {
@@ -83,6 +84,39 @@ body, html {
 				position: relative;
 				background: sandybrown;
 			}
+		}
+	}
+}
+
+#overlayLayer {
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: none;
+
+	#banner {
+		text-align: center;
+
+		#gameOver {
+			font-family: "Lucida Grande";
+			font-size: 48px;
+			font-weight: bold;
+			color: crimson;
+		}
+
+		#timeReadOut {
+			font-family: "Arial Black";
+			font-size: 24px;
+			color: #26cc16;
+		}
+
+		#pixelsTravelled {
+			color: lime;
 		}
 	}
 }

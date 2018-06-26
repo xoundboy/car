@@ -19,6 +19,8 @@ var roadCycles = 0;
 var roadOffsets = [];
 var gameEnded = false;
 var barsBeforeDecrement = 50;
+var car = document.getElementById("car");
+var barsTravelled = 0;
 
 setViewport();
 x = 50;
@@ -47,6 +49,11 @@ function gameOver() {
 	console.log("gameover");
 	gameEnded = true;
 	pauseGame();
+	var overlayLayer = document.getElementById("overlayLayer");
+	var pixelsTravelled = document.getElementById("pixelsTravelled");
+	pixelsTravelled.innerText = (barsTravelled * barWidth) + "";
+	overlayLayer.style.display = "flex";
+
 }
 
 function firstBitOfRoad() {
@@ -93,26 +100,10 @@ function checkWheelsStillOnRoad() {
 }
 
 function getWheelOnRoadCoords() {
-	var car = document.getElementById("car");
 	return {
 		rearWheelOffset:[car.offsetLeft + 40, car.offsetTop + 110],
 		frontWheelOffset:[car.offsetLeft + 110, car.offsetTop + 110]
 	};
-}
-
-function GetAllElementsAt(x, y) {
-	var $elements = $("body *").map(function() {
-		var $this = $(this);
-		var offset = $this.offset();
-		var l = offset.left;
-		var t = offset.top;
-		var h = $this.height();
-		var w = $this.width();
-		var maxx = l + w;
-		var maxy = t + h;
-		return (y <= maxy && y >= t) && (x <= maxx && x >= l) ? $this : null;
-	});
-	return $elements;
 }
 
 function carMotion() {
@@ -125,6 +116,7 @@ function carMotion() {
 	if (arrowDownPressed)
 		y = y + speedIncrement;
 	updateCarPosition();
+	barsTravelled++;
 }
 
 function getRandomNumberInRange(min, max) {
@@ -175,7 +167,6 @@ function drawRoadSection(offset) {
 	fullBar.style.width = barWidth + "px";
 	fullBar.appendChild(upperBar);
 	fullBar.appendChild(lowerBar);
-
 	document.getElementById("roadContainer").appendChild(fullBar);
 }
 
