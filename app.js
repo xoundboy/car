@@ -50,8 +50,9 @@ function gameOver() {
 	pauseGame();
 	var score = (barsTravelled * barWidth);
 	var highScore = window.localStorage.getItem("hiScore");
+
 	console.log(highScore);
-	if (score > parseInt(highScore)) {
+	if (!highScore || score > parseInt(highScore)) {
 		window.localStorage.setItem("hiScore", score);
 		highScore = score;
 	}
