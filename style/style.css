@@ -91,6 +91,10 @@ body, html {
     #overlayLayer #banner #hiScore {
       font-family: "Arial Black";
       font-size: 16px;
+      color: #fff000; }
+    #overlayLayer #banner #lowScore {
+      font-family: "Arial Black";
+      font-size: 16px;
       color: #3c130a; }
 
 /*# sourceMappingURL=style.css.map */

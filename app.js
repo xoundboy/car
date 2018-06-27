@@ -46,23 +46,33 @@ function pauseGame() {
 }
 
 function gameOver() {
+
 	gameEnded = true;
 	pauseGame();
+
 	var score = (barsTravelled * barWidth);
 	var highScore = window.localStorage.getItem("hiScore");
+	var lowScore = window.localStorage.getItem("loScore");
 
-	console.log(highScore);
 	if (!highScore || score > parseInt(highScore)) {
 		window.localStorage.setItem("hiScore", score);
 		highScore = score;
 	}
 
+	if (!lowScore || score < parseInt(lowScore)) {
+		window.localStorage.setItem("loScore", score);
+		lowScore = score;
+	}
+
 	var overlayLayer = document.getElementById("overlayLayer");
 	var pixelsTravelled = document.getElementById("pixelsTravelled");
 	var hiScoreValue = document.getElementById("hiScoreValue");
+	var lowScoreValue = document.getElementById("lowScoreValue");
+
 	pixelsTravelled.innerText =  score + "";
 	overlayLayer.style.display = "flex";
 	hiScoreValue.innerText = highScore;
+	lowScoreValue.innerText = lowScore;
 }
 
 function firstBitOfRoad() {
@@ -98,7 +108,7 @@ function checkWheel(x, y){
 	var offsetForBar = roadOffsets[offsetIndexOfRoadBar];
 	var bottomEdgeOfUpperBar = getUpperBarHeight(offsetForBar);
 	var topEdgeOfLowerBar = viewportHeight - getLowerBarHeight(offsetForBar);
-	return !(y < bottomEdgeOfUpperBar || y > topEdgeOfLowerBar)
+	return !(y < (bottomEdgeOfUpperBar - 10) || y > (topEdgeOfLowerBar + 10))
 }
 
 function checkWheelsStillOnRoad() {
