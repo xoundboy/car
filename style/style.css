@@ -1,69 +1,82 @@
 body, html {
   margin: 0;
   padding: 0;
-  position: relative; }
+  position: relative;
+}
 
 #page {
   background: grey;
   height: 100vh;
   width: 100vw;
   overflow: auto;
-  position: relative; }
-  #page #car {
-    margin-top: 20px;
-    position: absolute;
-    height: 110px;
-    width: 150px; }
-    #page #car .carBody {
-      position: absolute;
-      height: 50px;
-      width: 150px;
-      background: blue;
-      top: 40px; }
-    #page #car .cab {
-      position: absolute;
-      height: 40px;
-      width: 50px;
-      background: blue;
-      top: 0px;
-      left: 50px; }
-      #page #car .cab .glass {
-        position: absolute;
-        top: 10px;
-        left: 20px;
-        background: Dodgerblue;
-        height: 20px;
-        width: 30px; }
-    #page #car .wheel {
-      position: absolute;
-      background: black;
-      border-radius: 20px;
-      height: 40px;
-      width: 40px;
-      top: 70px;
-      left: 20px; }
-      #page #car .wheel.secondWheel {
-        left: 90px; }
-      #page #car .wheel .hub {
-        position: absolute;
-        background: grey;
-        border-radius: 10px;
-        height: 20px;
-        width: 20px;
-        top: 10px;
-        left: 10px; }
-  #page #roadContainer {
-    width: 100vw;
-    height: 100vh;
-    overflow: hidden; }
-    #page #roadContainer .fullBar {
-      float: left;
-      height: 100%; }
-      #page #roadContainer .fullBar .upperBar {
-        background: sandybrown; }
-      #page #roadContainer .fullBar .lowerBar {
-        position: relative;
-        background: sandybrown; }
+  position: relative;
+}
+#page #car {
+  margin-top: 20px;
+  position: absolute;
+  height: 110px;
+  width: 150px;
+}
+#page #car .carBody {
+  position: absolute;
+  height: 50px;
+  width: 150px;
+  background: blue;
+  top: 40px;
+}
+#page #car .cab {
+  position: absolute;
+  height: 40px;
+  width: 50px;
+  background: blue;
+  top: 0px;
+  left: 50px;
+}
+#page #car .cab .glass {
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  background: Dodgerblue;
+  height: 20px;
+  width: 30px;
+}
+#page #car .wheel {
+  position: absolute;
+  background: black;
+  border-radius: 20px;
+  height: 40px;
+  width: 40px;
+  top: 70px;
+  left: 20px;
+}
+#page #car .wheel.secondWheel {
+  left: 90px;
+}
+#page #car .wheel .hub {
+  position: absolute;
+  background: grey;
+  border-radius: 10px;
+  height: 20px;
+  width: 20px;
+  top: 10px;
+  left: 10px;
+}
+#page #roadContainer {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+#page #roadContainer .fullBar {
+  float: left;
+  height: 100%;
+}
+#page #roadContainer .fullBar .upperBar {
+  background: sandybrown;
+}
+#page #roadContainer .fullBar .lowerBar {
+  position: relative;
+  background: sandybrown;
+}
 
 #overlayLayer {
   width: 100vw;
@@ -74,27 +87,34 @@ body, html {
   position: absolute;
   top: 0;
   left: 0;
-  display: none; }
-  #overlayLayer #banner {
-    text-align: center; }
-    #overlayLayer #banner #gameOver {
-      font-family: "Arial Black";
-      font-size: 64px;
-      font-weight: bold;
-      color: #ff0400; }
-    #overlayLayer #banner #timeReadOut {
-      font-family: "Arial Black";
-      font-size: 36px;
-      color: #26cc16; }
-    #overlayLayer #banner #pixelsTravelled {
-      color: lime; }
-    #overlayLayer #banner #hiScore {
-      font-family: "Arial Black";
-      font-size: 16px;
-      color: #fff000; }
-    #overlayLayer #banner #lowScore {
-      font-family: "Arial Black";
-      font-size: 16px;
-      color: #3c130a; }
+  display: none;
+}
+#overlayLayer #banner {
+  text-align: center;
+}
+#overlayLayer #banner #gameOver {
+  font-family: "Arial Black";
+  font-size: 64px;
+  font-weight: bold;
+  color: #ff0400;
+}
+#overlayLayer #banner #timeReadOut {
+  font-family: "Arial Black";
+  font-size: 36px;
+  color: #26cc16;
+}
+#overlayLayer #banner #pixelsTravelled {
+  color: lime;
+}
+#overlayLayer #banner #hiScore {
+  font-family: "Arial Black";
+  font-size: 16px;
+  color: #fff000;
+}
+#overlayLayer #banner #lowScore {
+  font-family: "Arial Black";
+  font-size: 16px;
+  color: #3c130a;
+}
 
 /*# sourceMappingURL=style.css.map */
