@@ -3,7 +3,7 @@ Car
 A simple game of skill. The player must navigate the car keeping its wheels on the road at all times. Beware though! ... 
 the road gets narrower.
 
-<img src="car.jpg" style="height:200px" />
+![car picture](Car.jpg)
 
 ## Play the game
 
